@@ -1,0 +1,32 @@
+<div class="example-wrapper">
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <table>
+        <tr>
+           x
+            <td>
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('list_articles') }}">Liste des articles</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_USER') %}
+                
+                    <a href="{{ path('user_list') }}">Liste des utilisateurs</a>
+                {% endif %}
+            </td>
+            {# <td>
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('profile') }}">Votre profil</a>
+                {% endif %}
+            </td> #}
+             <td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Se connecter</a>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    </nav>
+</div>
