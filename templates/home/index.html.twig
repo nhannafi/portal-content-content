@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+ {% block css %} 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" src="" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+{% block title %}Hello Page !{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1000px; width: 100%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 6px 10px; }
+    .example-wrapper table td {padding: 10px; margin: 10px; text-decoration: none;}
+    .example-wrapper table td a {text-decoration: none;}
+</style>
+
+<div class="example-wrapper">
+    <div class="example-wrapper">
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <table>
+            <tr>
+                <td>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Se connecter</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('user_list') }}">Liste des utilisateurs</a>
+                    {% endif %}
+                </td>
+                {# <td>
+                        <a href="{{ path('videoGame_list') }}">Liste des jeux videos</a>
+                </td>
+                <td>
+                    {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('editor_list') }}">Liste des éditeurs</a>
+                    {% endif %}
+
+                </td> #}
+
+                <td>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('profile') }}">Votre profil</a>
+                    {% endif %}
+                    {% else %}
+                    <a href="{{ path('user-create') }}">Créer un compte</a>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        </nav>
+    </div>
+
+</div>
+{% endblock %}

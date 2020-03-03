@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User list{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        .example-wrapper ul {text-decoration: none;}
+        .example-wrapper a {text-decoration: none;}
+        .example-wrapper ul li {padding: 10px; margin: 10px; text-decoration: none;}
+        .example-wrapper ul li a{padding: 10px; margin: 3px; text-decoration: none; display: inline;}
+        .example-wrapper a {text-decoration: none;}
+    </style>
+     {% include 'layout/navbar.html.twig'%} 
+
+    <div class="example-wrapper">
+        <h1>Liste des utilisateurs du site</h1>
+        {% if is_granted('ROLE_ADMIN') %}
+            <button><a href="{{ path('user-create') }}"> Créer un nouvel utilisateur </a></button>
+        {% endif %}
+        <ul>
+            {# légèrement différent de php avec foreach userList as user #}
+            {% for user in user_list %}
+                <li>{{ user.firstName }} {{ user.lastName|upper }} :
+                    {{ user.email }} - {{ user.birthDate|date('d F Y') }}
+
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <button><a href="{{ path('user_edit', {'id': user.id}) }}" style="color: yellowgreen;">Editer</a></button>
+                        <button><a href="{{ path('user_delete', {'id': user.id}) }}" style="color: #C82829;">Supprimer</a></button>
+                    {% endif %}
+
+                </li>
+            {% endfor %}
+
+        </ul>
+        
+    </div>
+{% endblock %}

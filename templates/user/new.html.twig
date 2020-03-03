@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create User{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% include 'layout/navbar.html.twig'%}
+
+    {{ form(userForm) }}
+{% endblock %}

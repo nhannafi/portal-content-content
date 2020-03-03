@@ -2,11 +2,141 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Welcome to our game video!{% endblock %}</title>
+        {% block stylesheets %}
+        {% endblock %}
+        {# <link rel="icon" type="image/x-icon" href="{{ asset{'favicon.ico'} }}"> #}
+        {% block css %} 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" src="" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+        
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block body %}
+        <style>
+        {# deplacer au ficher public/css/style.css #}
+        .example-wrapper { margin: 1em auto; max-width: 1000px; width: 100%; font: 18px/1.5 sans-serif;}
+        .example-wrapper code { background: #F5F5F5; padding: 6px 10px; }
+        .example-wrapper ul li {padding: 10px; margin: 10px; text-decoration: none;  }
+        .example-wrapper ul li a{padding: 10px; margin: 3px; text-decoration: none; display: inline; }
+        .example-wrapper ul {text-decoration: none; margin-left: 120px;}
+        .example-wrapper h1 {text-decoration: none; text-align: center;}
+        .example-wrapper h2 {text-decoration: none;}
+        @charset "utf-8";
+
+        body{
+            background-image: url('bg.png');
+            font-family: "Helvetica Neue";
+            padding:10px;
+        }
+         body{
+            font:Georgia, "Times New Roman", Times, serif;
+            font-size:20px;
+            text-decoration: none;
+        }
+        .center-tout{
+            
+            border: 1px groove #ddd !important;
+            padding: 10px 10px 10px 10px !important;
+            margin: 250px 1000px 1000px 250px !important;
+        }
+        button
+        {
+            border-radius:5px;
+        }
+
+        fieldset.form-group {
+        }
+        h1 h2 h3 p{
+            color:grey;
+        }
+        nav {
+            width:100%;
+        }
+        form {
+
+            width: 60%;
+            margin:20px;
+            border: 1px gris solid;
+            background-color: white;
+        }
+        form.outset {
+            border-style: outset;
+            }
+            
+        .boutonCO{
+            font-size:large;
+            }
+        .cat{
+            color:skyblue;
+        }
+
+        #articles{
+            text-decoration: none;
+            min-height: 500px;
+            border: 1px dotted #F3EEEC; 
+            margin-top: 100px;
+        }
+
+        #détails{
+            height: 527px;
+            padding: 3px;
+            border: 1px dotted #F3EEEC;
+            margin-top: 100px;
+            
+        }
+
+        #article{
+            text-align: left;
+            padding: 8px;
+            margin: 5px;
+            width: 150px;
+            text-decoration: none;
+        }
+
+
+        a{
+            text-decoration: none;
+        }
+
+        a:hover {
+            color:black;
+        }
+        img{
+            position:absolute;
+            align-content:right;
+        }
+        </style>
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        {% endblock %}
+
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# read and display several types of flash messages #}
+        {% for label, messages in app.flashes(['success', 'warning']) %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# read and display all flash messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
     </body>
+    {% endblock %}
 </html>
