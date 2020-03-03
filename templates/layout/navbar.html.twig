@@ -32,9 +32,9 @@
                     </td>
                     <td>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {# {% if is_granted('ROLE_USER') %}
+                            {% if is_granted('ROLE_USER') %}
                                 <a href="{{ path('profile') }}">Votre profil</a>
-                            {% endif %} #}
+                            {% endif %}
                         {% else %}
                             <a href="{{ path('user-create') }}">Créer un compte</a>
                         {% endif %}

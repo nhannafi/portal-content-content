@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ContentRepository")
  */
-class Post
+class Content
 {
     /**
      * @ORM\Id()
@@ -21,112 +21,151 @@ class Post
     /**
      * @ORM\Column(type="text")
      */
-    private $Content;
+    private $body;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $datePost;
+    private $date;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isAutoritated;
+    private $isPublish;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="post")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="contents")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="content")
      */
-    private $comment;
+    private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     */
+    private $approver;
+
+    /**
+     * Content constructor.
+     */
     public function __construct()
     {
-        $this->comment = new ArrayCollection();
+        $this->date = new \DateTime();
+        $this->isPublish = false;
+        $this->comments = new ArrayCollection();
+        $this->approver = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getBody(): ?string
     {
-        return $this->Content;
+        return $this->body;
     }
 
-    public function setContent(string $Content): self
+    public function setBody(string $body): self
     {
-        $this->Content = $Content;
+        $this->body = $body;
 
         return $this;
     }
 
-    public function getDatePost(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->datePost;
+        return $this->date;
     }
 
-    public function setDatePost(\DateTimeInterface $datePost): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->datePost = $datePost;
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getIsAutoritated(): ?bool
+    public function getIsPublish(): ?bool
     {
-        return $this->IsAutoritated;
+        return $this->isPublish;
     }
 
-    public function setIsAutoritated(bool $IsAutoritated): self
+    public function setIsPublish(bool $isPublish): self
     {
-        $this->IsAutoritated = $IsAutoritated;
+        $this->isPublish = $isPublish;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getAuthor(): ?User
     {
-        return $this->user;
+        return $this->author;
     }
 
-    public function setUser(?User $user): self
+    public function setAuthor(?User $author): self
     {
-        $this->user = $user;
+        $this->author = $author;
 
         return $this;
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection|Comments[]
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
-        return $this->comment;
+        return $this->comments;
     }
 
-    public function addComment(Comment $comment): self
+    public function addComment(Comments $comment): self
     {
-        if (!$this->comment->contains($comment)) {
-            $this->comment[] = $comment;
-            $comment->setPost($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setContent($this);
         }
 
         return $this;
     }
 
-    public function removeComment(Comment $comment): self
+    public function removeComment(Comments $comment): self
     {
-        if ($this->comment->contains($comment)) {
-            $this->comment->removeElement($comment);
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getPost() === $this) {
-                $comment->setPost(null);
+            if ($comment->getContent() === $this) {
+                $comment->setContent(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getApprover(): Collection
+    {
+        return $this->approver;
+    }
+
+    public function addApprover(User $approver): self
+    {
+        if (!$this->approver->contains($approver)) {
+            $this->approver[] = $approver;
+        }
+
+        return $this;
+    }
+
+    public function removeApprover(User $approver): self
+    {
+        if ($this->approver->contains($approver)) {
+            $this->approver->removeElement($approver);
         }
 
         return $this;

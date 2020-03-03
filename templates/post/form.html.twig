@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContentController!{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_widget(form.body) }}
+    {{ form_widget(form.date) }}
+{{ form_end(form) }}
+{% endblock %}
